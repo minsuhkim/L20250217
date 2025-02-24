@@ -29,25 +29,37 @@ namespace L20250217
         
         protected bool isRunning = true;
 
-        public void Load()
+        public void Load(string fileName)
         {
             //file 에서 로딩
-            string[] scene = {
-                "**********",
-                "*P       *",
-                "*        *",
-                "*        *",
-                "*        *",
-                "*    M   *",
-                "*        *",
-                "*        *",
-                "*       G*",
-                "**********",
-            };
+            // Byte 단위로 읽어올 수 있는 빨대
+            //string tempScene = "";
+            //byte[] buffer = new byte[1024];
+            //FileStream fs = new FileStream(fileName, FileMode.Open);
+            //fs.Seek(0, SeekOrigin.End);
+            //long fileSize = fs.Position;
+
+            //fs.Seek(0, SeekOrigin.Begin);
+            //int readCount = fs.Read(buffer, 0, (int)fileSize);
+            //tempScene = Encoding.UTF8.GetString(buffer);
+            //tempScene = tempScene.Replace("\0", "");
+            //string[] scene = tempScene.Split("\r\n");
+            //fs.Close();
+
+
+            List<string> scene = new List<string>();
+            // line 단위로 읽어올 수 있는 빨대
+            StreamReader sr = new StreamReader(fileName);
+            while (!sr.EndOfStream)
+            {
+                scene.Add(sr.ReadLine());
+            }
+            sr.Close();
+
 
             world = new World();
 
-            for (int y = 0; y < scene.Length; y++)
+            for (int y = 0; y < scene.Count; y++)
             {
                 for (int x = 0; x < scene[y].Length; x++)
                 {
@@ -58,8 +70,7 @@ namespace L20250217
                     }
                     else if (scene[y][x] == ' ')
                     {
-                        GameObject floor = new Floor(x, y, scene[y][x]);
-                        world.Instantiate(floor);
+
                     }
                     else if (scene[y][x] == 'P')
                     {
@@ -76,8 +87,14 @@ namespace L20250217
                         GameObject goal = new Goal(x, y, scene[y][x]);
                         world.Instantiate(goal);
                     }
+                    GameObject floor = new Floor(x, y, ' ');
+                    world.Instantiate(floor);
                 }
             }
+
+            // Loading Complete
+            // Sort
+            world.Sort();
         }
 
         public void ProcessInput()

@@ -13,6 +13,8 @@ namespace L20250217
             X = inX;
             Y = inY;
             Shape = inShape;
+            orderLayer = 5;
+            isTrigger = true;
         }
 
         public override void Update()
@@ -24,19 +26,31 @@ namespace L20250217
             }
             else if(direction == 1)
             {
-                X++;
+                if (!PredictCollision(X + 1, Y))
+                {
+                    X++;
+                }                
             }
             else if(direction == 2)
             {
-                X--;
+                if (!PredictCollision(X - 1, Y))
+                {
+                    X--;
+                }
             }
             else if(direction == 3)
             {
-                Y++;
+                if (!PredictCollision(X, Y + 1))
+                {
+                    Y++;
+                }
             }
             else if(direction == 4)
             {
-                Y--;
+                if (!PredictCollision(X, Y - 1))
+                {
+                    Y--;
+                }
             }
 
             if (X < 0)
