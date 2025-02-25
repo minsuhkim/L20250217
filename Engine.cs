@@ -13,20 +13,22 @@ namespace L20250217
 
         }
 
+        static public char[,] backBuffer = new char[20, 40];
+
         // 엔진은 단 하나만의 인스턴스를 가져야 하므로 싱글톤으로 제작
         static protected Engine instance;
         static public Engine Instance
         {
             get
             {
-                if(instance == null)
+                if (instance == null)
                 {
                     instance = new Engine();
                 }
                 return instance;
             }
         }
-        
+
         protected bool isRunning = true;
 
         public void Load(string fileName)
@@ -110,17 +112,31 @@ namespace L20250217
 
         protected void Render()
         {
-            Console.Clear();
+            // IO 제일 느림 >> 모니터 출력 따라서 메모리에 그려놓고 한번에 출력
+            //Console.Clear();
             world.Render();
+
+
+            // '메모리에 있는 걸 한 방에 붙여줘'라는 함수가 C#에는 없음
+            for (int Y = 0; Y < 20; Y++)
+            {
+                for (int X = 0; X < 40; X++)
+                {
+                    Console.SetCursorPosition(X, Y);
+                    Console.Write(backBuffer[Y, X]);
+                }
+            }
         }
 
         public void Run()
         {
+            Console.CursorVisible = false;
             while (isRunning)
             {
                 ProcessInput();
                 Update();
                 Render();
+                Thread.Sleep(33);
             }
         }
 

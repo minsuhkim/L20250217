@@ -16,7 +16,10 @@ namespace L20250217
         static protected ConsoleKeyInfo keyInfo;
         static public void Process()
         {
-            keyInfo = Console.ReadKey();
+            if (Console.KeyAvailable)
+            {
+                keyInfo = Console.ReadKey();
+            }
         }
 
         static public bool GetKeyDown(ConsoleKey key)

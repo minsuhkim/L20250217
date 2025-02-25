@@ -24,8 +24,9 @@ namespace L20250217
         public virtual void Render()
         {
             //x,y위치에 shape 출력
-            Console.SetCursorPosition(X, Y);
-            Console.Write(Shape);
+            //Console.SetCursorPosition(X, Y);
+            //Console.Write(Shape);
+            Engine.backBuffer[Y, X] = Shape;
         }
 
         public bool PredictCollision(int newX, int newY)
