@@ -18,7 +18,7 @@ namespace L20250217
         {
             if (Console.KeyAvailable)
             {
-                keyInfo = Console.ReadKey();
+                keyInfo = Console.ReadKey(true);
             }
         }
 
@@ -34,5 +34,9 @@ namespace L20250217
             }
         }
 
+        static public void ClearInput()
+        {
+            keyInfo = new ConsoleKeyInfo();
+        }
     }
 }

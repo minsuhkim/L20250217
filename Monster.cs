@@ -17,50 +17,60 @@ namespace L20250217
             isTrigger = true;
         }
 
+        private float elapsedTime = 0f;
+
         public override void Update()
         {
-            Random rand = new Random();
-            int direction = rand.Next(0, 5);
-            if(direction == 0)
-            {                
-            }
-            else if(direction == 1)
+            if(elapsedTime > 0.0005f)
             {
-                if (!PredictCollision(X + 1, Y))
+                elapsedTime = 0f;
+                Random rand = new Random();
+                int direction = rand.Next(0, 4);
+                if (direction == 0)
                 {
-                    X++;
-                }                
-            }
-            else if(direction == 2)
-            {
-                if (!PredictCollision(X - 1, Y))
+                    if (!PredictCollision(X, Y - 1))
+                    {
+                        Y--;
+                    }
+                }
+                else if (direction == 1)
                 {
-                    X--;
+                    if (!PredictCollision(X + 1, Y))
+                    {
+                        X++;
+                    }
+                }
+                else if (direction == 2)
+                {
+                    if (!PredictCollision(X - 1, Y))
+                    {
+                        X--;
+                    }
+                }
+                else if (direction == 3)
+                {
+                    if (!PredictCollision(X, Y + 1))
+                    {
+                        Y++;
+                    }
+                }
+
+                if (X < 0)
+                {
+                    X = 0;
+                }
+                if (Y < 0)
+                {
+                    Y = 0;
                 }
             }
-            else if(direction == 3)
+            else
             {
-                if (!PredictCollision(X, Y + 1))
-                {
-                    Y++;
-                }
-            }
-            else if(direction == 4)
-            {
-                if (!PredictCollision(X, Y - 1))
-                {
-                    Y--;
-                }
+                elapsedTime += Time.deltaTime;
             }
 
-            if (X < 0)
-            {
-                X = 0;
-            }
-            if(Y < 0)
-            {
-                Y = 0;
-            }
+            Console.SetCursorPosition(30, 10);
+            Console.Write(Time.deltaTime);
         }
     }
 }

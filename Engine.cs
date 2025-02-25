@@ -13,7 +13,9 @@ namespace L20250217
 
         }
 
+        // 더블 버퍼링
         static public char[,] backBuffer = new char[20, 40];
+        static public char[,] frontBuffer = new char[20, 40];
 
         // 엔진은 단 하나만의 인스턴스를 가져야 하므로 싱글톤으로 제작
         static protected Engine instance;
@@ -122,21 +124,39 @@ namespace L20250217
             {
                 for (int X = 0; X < 40; X++)
                 {
-                    Console.SetCursorPosition(X, Y);
-                    Console.Write(backBuffer[Y, X]);
+                    if (backBuffer[Y, X] != frontBuffer[Y, X])
+                    {
+                        frontBuffer[Y, X] = backBuffer[Y, X];
+                        Console.SetCursorPosition(X, Y);
+                        Console.Write(backBuffer[Y, X]);
+                    }
                 }
             }
         }
 
+        public DateTime lastTime;
         public void Run()
         {
             Console.CursorVisible = false;
+            float frameTime = 1000.0f / 144.0f;
+            float elapseTime = 0.0f;
+
             while (isRunning)
             {
-                ProcessInput();
-                Update();
-                Render();
-                Thread.Sleep(33);
+                Time.Update();
+
+                //if(elapseTime >= frameTime)
+                //{
+                    ProcessInput();
+                    Update();
+                    Render();
+                    Input.ClearInput();
+                    elapseTime = 0f;
+                //}
+                //else
+                //{
+                //    elapseTime += Time.deltaTime;
+                //}
             }
         }
 
