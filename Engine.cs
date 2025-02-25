@@ -147,11 +147,11 @@ namespace L20250217
 
                 //if(elapseTime >= frameTime)
                 //{
-                    ProcessInput();
-                    Update();
-                    Render();
-                    Input.ClearInput();
-                    elapseTime = 0f;
+                ProcessInput();
+                Update();
+                Render();
+                Input.ClearInput();
+                elapseTime = 0f;
                 //}
                 //else
                 //{

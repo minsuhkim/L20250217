@@ -21,7 +21,7 @@ namespace L20250217
 
         public override void Update()
         {
-            if(elapsedTime > 0.0005f)
+            if(elapsedTime >= 500f)
             {
                 elapsedTime = 0f;
                 Random rand = new Random();
