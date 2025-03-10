@@ -102,14 +102,33 @@ namespace L20250217
             {
                 for (int x = 0; x < scene[y].Length; x++)
                 {
+                    GameObject floor = new GameObject();
+                    floor.name = "Floor";
+                    floor.transform.X = x;
+                    floor.transform.Y = y;
+
+                    SpriteRenderer spriterenderer = floor.AddComponent<SpriteRenderer>(new SpriteRenderer("floor.bmp", true));
+                    spriterenderer.LoadBmp("floor.bmp");
+                    spriterenderer.Shape = ' ';
+
+                    world.Instantiate(floor);
+
                     if (scene[y][x] == '*')
                     {
-                        GameObject wall = new Wall(x, y, scene[y][x]);
+                        GameObject wall = new GameObject();
+                        wall.name = "Player";
+                        wall.transform.X = x;
+                        wall.transform.Y = y;
+
+                        SpriteRenderer spriteRenderer = wall.AddComponent<SpriteRenderer>(new SpriteRenderer("player.bmp", true));
+                        spriteRenderer.LoadBmp("wall.bmp");
+                        spriteRenderer.Shape = '*';
+
                         world.Instantiate(wall);
                     }
                     else if (scene[y][x] == ' ')
                     {
-
+                        
                     }
                     else if (scene[y][x] == 'P')
                     {
@@ -143,7 +162,7 @@ namespace L20250217
                         spriteRenderer.colorKey.g = 255;
                         spriteRenderer.colorKey.b = 255;
                         spriteRenderer.colorKey.a = 255;
-                        spriteRenderer.LoadBmp("monster.bmp", false);
+                        spriteRenderer.LoadBmp("monster.bmp");
                         spriteRenderer.Shape = 'M';
 
                         world.Instantiate(monster);
@@ -153,11 +172,9 @@ namespace L20250217
                         GameObject goal = new Goal(x, y, scene[y][x]);
                         world.Instantiate(goal);
                     }
-                    GameObject floor = new Floor(x, y, ' ');
-                    world.Instantiate(floor);
+                    
                 }
             }
-
             world.Sort();
         }
 

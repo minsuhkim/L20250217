@@ -18,6 +18,9 @@ namespace L20250217
                 //    Y--;
                 //}
                 //spriteIndexY = 2;
+
+                gameObject.transform.Translate(0, -1);
+                gameObject.GetComponent<SpriteRenderer>().spriteIndexY = 2;
             }
             else if (Input.GetKeyDown(SDL.SDL_Keycode.SDLK_s) || Input.GetKeyDown(SDL.SDL_Keycode.SDLK_DOWN))
             {
@@ -26,6 +29,8 @@ namespace L20250217
                 //    Y++;
                 //}
                 //spriteIndexY = 3;
+                gameObject.transform.Translate(0, 1);
+                gameObject.GetComponent<SpriteRenderer>().spriteIndexY = 3;
             }
             else if (Input.GetKeyDown(SDL.SDL_Keycode.SDLK_a) || Input.GetKeyDown(SDL.SDL_Keycode.SDLK_LEFT))
             {
@@ -34,6 +39,8 @@ namespace L20250217
                 //    X--;
                 //}
                 //spriteIndexY = 0;
+                gameObject.transform.Translate(-1, 0);
+                gameObject.GetComponent<SpriteRenderer>().spriteIndexY = 0;
             }
             else if (Input.GetKeyDown(SDL.SDL_Keycode.SDLK_d) || Input.GetKeyDown(SDL.SDL_Keycode.SDLK_RIGHT))
             {
@@ -42,6 +49,8 @@ namespace L20250217
                 //    X++;
                 //}
                 //spriteIndexY = 1;
+                gameObject.transform.Translate(1, 0);
+                gameObject.GetComponent<SpriteRenderer>().spriteIndexY = 1;
             }
         }
     }
