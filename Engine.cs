@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SDL2;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,39 @@ namespace L20250217
         }
 
         protected bool isRunning = true;
+        public IntPtr myWindow;
+        public IntPtr myRenderer;
+        public SDL.SDL_Event myEvent;
+
+        public bool Init()
+        {
+            if (SDL.SDL_Init(SDL.SDL_INIT_EVERYTHING) < 0)
+            {
+                Console.WriteLine("Fail Init.");
+                return false;
+            }
+
+            myWindow = SDL.SDL_CreateWindow(
+                "Game",
+                100, 100,
+                640, 480,
+                SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN);
+
+            myRenderer = SDL.SDL_CreateRenderer(myWindow, -1, SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED |
+                SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC |
+                SDL.SDL_RendererFlags.SDL_RENDERER_TARGETTEXTURE);
+
+            return true;
+        }
+
+        public bool Quit()
+        {
+            SDL.SDL_DestroyRenderer(myRenderer);
+            SDL.SDL_DestroyWindow(myWindow);
+
+            SDL.SDL_Quit();
+            return true;
+        }
 
         public void Load(string fileName)
         {
@@ -96,8 +130,6 @@ namespace L20250217
                 }
             }
 
-            // Loading Complete
-            // Sort
             world.Sort();
         }
 
@@ -114,10 +146,10 @@ namespace L20250217
 
         protected void Render()
         {
-            // IO 제일 느림 >> 모니터 출력 따라서 메모리에 그려놓고 한번에 출력
-            //Console.Clear();
+            SDL.SDL_SetRenderDrawColor(myRenderer, 0, 0, 0, 0);
+            SDL.SDL_RenderClear(myRenderer);
+            
             world.Render();
-
 
             // '메모리에 있는 걸 한 방에 붙여줘'라는 함수가 C#에는 없음
             for (int Y = 0; Y < 20; Y++)
@@ -132,31 +164,29 @@ namespace L20250217
                     }
                 }
             }
+
+            SDL.SDL_RenderPresent(myRenderer);
         }
 
-        public DateTime lastTime;
         public void Run()
         {
             Console.CursorVisible = false;
-            float frameTime = 1000.0f / 144.0f;
-            float elapseTime = 0.0f;
 
             while (isRunning)
             {
+                SDL.SDL_PollEvent(out myEvent);
+
                 Time.Update();
 
-                //if(elapseTime >= frameTime)
-                //{
-                ProcessInput();
+                switch (myEvent.type)
+                {
+                    case SDL.SDL_EventType.SDL_QUIT:
+                        isRunning = false;
+                        break;
+                }
+
                 Update();
                 Render();
-                Input.ClearInput();
-                elapseTime = 0f;
-                //}
-                //else
-                //{
-                //    elapseTime += Time.deltaTime;
-                //}
             }
         }
 
