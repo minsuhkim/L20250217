@@ -51,13 +51,13 @@ namespace L20250217
             //MethodInfo[] methods = classType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
             //foreach (MethodInfo info in methods)
             //{
-            //    //Console.WriteLine($"{info.Name}");
-            //    if (info.Name.CompareTo("Add") == 0)
+            //    //Console.WriteLine($"{info.name}");
+            //    if (info.name.CompareTo("Add") == 0)
             //    {
             //        ParameterInfo[] paramInfos = info.GetParameters();
             //        foreach (ParameterInfo paramInfo in paramInfos)
             //        {
-            //            Console.WriteLine(paramInfo.Name);
+            //            Console.WriteLine(paramInfo.name);
             //        }
             //        //Object[] param = { 3, 5 };
             //        //info.Invoke(d, param);
@@ -67,15 +67,15 @@ namespace L20250217
             //FieldInfo[] fields = classType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
             //foreach (FieldInfo info in fields)
             //{
-            //    Console.WriteLine($"{info.FieldType} {info.Name} : {info.GetValue(d)}");
+            //    Console.WriteLine($"{info.FieldType} {info.name} : {info.GetValue(d)}");
             //    info.SetValue(d, 10);
-            //    Console.WriteLine($"{info.FieldType} {info.Name} : {info.GetValue(d)}");
+            //    Console.WriteLine($"{info.FieldType} {info.name} : {info.GetValue(d)}");
             //}
 
             //PropertyInfo[] propertyInfos = classType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
             //foreach (PropertyInfo info in propertyInfos)
             //{
-            //    Console.WriteLine($"{info.Name} {info.GetValue(d)}");
+            //    Console.WriteLine($"{info.name} {info.GetValue(d)}");
             //}
 
             Engine.Instance.Init();

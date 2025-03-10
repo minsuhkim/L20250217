@@ -9,20 +9,22 @@ namespace L20250217
 {
     public class GameObject
     {
-        List<Component> components = new List<Component>();
+        public List<Component> components = new List<Component>();
 
         
         public bool isTrigger = false;
         public bool isCollide = false;
 
-        string Name;
+        public string name;
         protected static int gameObjectCount = 0;
+
+        public Transform transform;
 
         public GameObject()
         {
             Init();
             gameObjectCount++;
-            Name = $"GameObject ({gameObjectCount})";
+            name = $"GameObject ({gameObjectCount})";
         }
 
         ~GameObject()
@@ -32,13 +34,14 @@ namespace L20250217
 
         public void Init()
         {
-            AddComponent<Transform>(new Transform());
+            transform = AddComponent<Transform>(new Transform());
         }
 
         public T AddComponent<T>(T inComponent) where T : Component
         {
 
             components.Add(inComponent);
+            inComponent.gameObject = this;
 
             return inComponent;
         }
@@ -60,6 +63,19 @@ namespace L20250217
             //    }
             //}
             return false;
+        }
+
+        public T GetComponent<T>() where T : Component
+        {
+            foreach (Component component in components)
+            {
+                if (component is T)
+                {
+                    return (T)component;
+                }
+            }
+
+            return null;
         }
     }
 }

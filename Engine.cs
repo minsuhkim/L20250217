@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -112,12 +113,39 @@ namespace L20250217
                     }
                     else if (scene[y][x] == 'P')
                     {
-                        GameObject player = new Player(x, y, scene[y][x]);
+                        GameObject player = new GameObject();
+                        player.name = "Player";
+                        player.transform.X = x;
+                        player.transform.Y = y;
+
+                        player.AddComponent<PlayerController>(new PlayerController());
+
+                        SpriteRenderer spriteRenderer = player.AddComponent<SpriteRenderer>(new SpriteRenderer("player.bmp", true));
+                        spriteRenderer.colorKey.r = 255;
+                        spriteRenderer.colorKey.g = 0;
+                        spriteRenderer.colorKey.b = 255;
+                        spriteRenderer.colorKey.a = 255;
+                        spriteRenderer.LoadBmp("player.bmp", true);
+                        spriteRenderer.Shape = 'P';
+                        spriteRenderer.processTime = 150.0f;
+
                         world.Instantiate(player);
                     }
                     else if (scene[y][x] == 'M')
                     {
-                        GameObject monster = new Monster(x, y, scene[y][x]);
+                        GameObject monster = new GameObject();
+                        monster.name = "Monster";
+                        monster.transform.X = x;
+                        monster.transform.Y = y;
+
+                        SpriteRenderer spriteRenderer = monster.AddComponent<SpriteRenderer>(new SpriteRenderer("player.bmp", true));
+                        spriteRenderer.colorKey.r = 255;
+                        spriteRenderer.colorKey.g = 255;
+                        spriteRenderer.colorKey.b = 255;
+                        spriteRenderer.colorKey.a = 255;
+                        spriteRenderer.LoadBmp("monster.bmp", false);
+                        spriteRenderer.Shape = 'M';
+
                         world.Instantiate(monster);
                     }
                     else if (scene[y][x] == 'G')
