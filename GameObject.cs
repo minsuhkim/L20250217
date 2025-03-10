@@ -18,10 +18,24 @@ namespace L20250217
         public bool isCollide = false;
 
         public SDL.SDL_Color color;
-        public int spriteSize = 15;
+        public int spriteSize = 30;
 
-        IntPtr myTexture;
-        IntPtr mySurface;
+        protected bool isAnimation = false;
+        protected IntPtr myTexture;
+        protected IntPtr mySurface;
+
+        protected int spriteIndexX = 0;
+        protected int spriteIndexY = 0;
+
+        protected SDL.SDL_Color colorKey;
+
+        public GameObject()
+        {
+            colorKey.r = 255;
+            colorKey.g = 255;
+            colorKey.b = 255;
+            colorKey.a = 255;
+        }
 
         public virtual void Update()
         {
@@ -48,10 +62,26 @@ namespace L20250217
                 SDL.SDL_Surface* surface = (SDL.SDL_Surface*)(mySurface);     // GPU 옆에 있는 VRAM으로 옮김
 
                 SDL.SDL_Rect sourceRect;        // 이미지 원본
-                sourceRect.x = 0;
-                sourceRect.y = 0;
-                sourceRect.w = surface->w;
-                sourceRect.h = surface->h;
+
+                if (isAnimation)
+                {
+                    int cellSizeX = surface->w / 5;
+                    int cellSizeY = surface->h / 5;
+                    sourceRect.x = cellSizeX * spriteIndexX;
+                    sourceRect.y = cellSizeY * spriteIndexY;
+                    sourceRect.w = cellSizeX;
+                    sourceRect.h = cellSizeY;
+                    spriteIndexX++;
+                    spriteIndexX %= 5;
+                }
+                else
+                {
+                    sourceRect.x = 0;
+                    sourceRect.y = 0;
+                    sourceRect.w = surface->w;
+                    sourceRect.h = surface->h;
+                }
+
                 SDL.SDL_RenderCopy(Engine.Instance.myRenderer,
                     myTexture,
                     ref sourceRect,
@@ -81,6 +111,7 @@ namespace L20250217
             unsafe
             {   //  이미지 정보 가져와서 나중에 할 일이 있음
                 SDL.SDL_Surface* surface = (SDL.SDL_Surface*)(mySurface);     // GPU 옆에 있는 VRAM으로 옮김
+                SDL.SDL_SetColorKey(mySurface, 1, SDL.SDL_MapRGB(surface->format, colorKey.r, colorKey.g, colorKey.b));
             }
 
             myTexture = SDL.SDL_CreateTextureFromSurface(Engine.Instance.myRenderer, mySurface);
