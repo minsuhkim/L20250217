@@ -20,6 +20,8 @@ namespace L20250217
             color.g = 0;
             color.b = 0;
             color.a = 0;
+
+            LoadBmp("Data/wall.bmp");
         }
     }
 }

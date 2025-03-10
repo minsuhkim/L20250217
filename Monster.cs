@@ -20,6 +20,8 @@ namespace L20250217
             color.g = 100;
             color.b = 100;
             color.a = 0;
+
+            LoadBmp("Data/monster.bmp");
         }
 
         private float elapsedTime = 0f;
