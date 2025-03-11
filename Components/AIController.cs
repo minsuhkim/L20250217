@@ -14,6 +14,13 @@ namespace L20250217
 
         private float elapsedTime = 0f;
 
+        public CharacterController2D characterController2D;
+
+        public override void Awake()
+        {
+            characterController2D = GetComponent<CharacterController2D>();
+        }
+
         public override void Update()
         {
             if(elapsedTime >= 500f)
@@ -23,35 +30,19 @@ namespace L20250217
                 int direction = rand.Next(0, 4);
                 if (direction == 0)
                 {
-                    transform.Translate(0, -1);
-                    //if (!PredictCollision(X, Y - 1))
-                    //{
-                    //    Y--;
-                    //}
+                    characterController2D.Move(0, 1);
                 }
                 else if (direction == 1)
                 {
-                    transform.Translate(1, 0);
-                    //if (!PredictCollision(X + 1, Y))
-                    //{
-                    //    X++;
-                    //}
+                    characterController2D.Move(1,0);
                 }
                 else if (direction == 2)
                 {
-                    transform.Translate(-1, 0);
-                    //if (!PredictCollision(X - 1, Y))
-                    //{
-                    //    X--;
-                    //}
+                    characterController2D.Move(-1, 0);
                 }
                 else if (direction == 3)
                 {
-                    transform.Translate(0, 1);
-                    //if (!PredictCollision(X, Y + 1))
-                    //{
-                    //    Y++;
-                    //}
+                    characterController2D.Move(0, -1);
                 }
             }
             else

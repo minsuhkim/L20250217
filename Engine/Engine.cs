@@ -146,6 +146,7 @@ namespace L20250217
                         monster.name = "Monster";
                         monster.transform.X = x;
                         monster.transform.Y = y;
+                        monster.AddComponent<CharacterController2D>();
 
                         SpriteRenderer spriteRenderer = monster.AddComponent(new SpriteRenderer());
                         spriteRenderer.colorKey.r = 255;

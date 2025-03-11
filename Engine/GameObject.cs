@@ -11,7 +11,7 @@ namespace L20250217
     {
         public List<Component> components = new List<Component>();
 
-        
+
         public bool isTrigger = false;
         public bool isCollide = false;
 
@@ -34,7 +34,8 @@ namespace L20250217
 
         public void Init()
         {
-            transform = AddComponent<Transform>(new Transform());
+            transform = new Transform();
+            AddComponent<Transform>();
         }
 
         public T AddComponent<T>(T inComponent) where T : Component
@@ -43,6 +44,14 @@ namespace L20250217
             components.Add(inComponent);
             inComponent.gameObject = this;
             inComponent.transform = transform;
+
+            return inComponent;
+        }
+
+        public T AddComponent<T>() where T : Component, new()
+        {
+            T inComponent = new T();
+            AddComponent<T>(inComponent);
 
             return inComponent;
         }

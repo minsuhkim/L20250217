@@ -8,7 +8,7 @@ namespace L20250217
 {
     public class CharacterController2D : Collider2D
     {
-        public bool Move(int addX, int addY)
+        public void Move(int addX, int addY)
         {
             int futureX = transform.X + addX;
             int futureY = transform.Y + addY;
@@ -19,11 +19,11 @@ namespace L20250217
                 {
                     if(choiceObject.transform.X == futureX && choiceObject.transform.Y == futureY)
                     {
-                        return false;
+                        return;
                     }
                 }
             }
-            return true;
+            transform.Translate(addX, addY);
         }
     }
 }
