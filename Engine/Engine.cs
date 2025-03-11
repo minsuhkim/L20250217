@@ -127,7 +127,8 @@ namespace L20250217
                         player.transform.Y = y;
 
                         player.AddComponent(new PlayerController());
-                        player.AddComponent(new CharacterController2D());
+                        CharacterController2D characterController2D = player.AddComponent(new CharacterController2D());
+                        characterController2D.isTrigger = true;
                         SpriteRenderer spriteRenderer = player.AddComponent(new SpriteRenderer());
                         spriteRenderer.colorKey.r = 255;
                         spriteRenderer.colorKey.g = 0;
@@ -146,7 +147,7 @@ namespace L20250217
                         monster.name = "Monster";
                         monster.transform.X = x;
                         monster.transform.Y = y;
-                        monster.AddComponent<CharacterController2D>();
+                        monster.AddComponent<CharacterController2D>().isTrigger = true;
 
                         SpriteRenderer spriteRenderer = monster.AddComponent(new SpriteRenderer());
                         spriteRenderer.colorKey.r = 255;

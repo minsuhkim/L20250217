@@ -41,5 +41,11 @@ namespace L20250217
                 spriteRenderer.spriteIndexY = 1;
             }
         }
+
+        public void OnTriggerEnter2D(GameObject other)
+        {
+            //Console.SetCursorPosition(300, 400);
+            Console.WriteLine($"trigger 감지: {other.name}");
+        }
     }
 }
