@@ -128,7 +128,6 @@ namespace L20250217
             }
 
             myTexture = SDL.SDL_CreateTextureFromSurface(Engine.Instance.myRenderer, mySurface);
-
         }
     }
 }

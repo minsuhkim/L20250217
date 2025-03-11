@@ -68,7 +68,7 @@ namespace L20250217
                     //    gameObjects[j] = temp;
                     //}
 
-                    if (sortCompre(gameObjects[i], gameObjects[j]) < 0)
+                    if (sortCompre(gameObjects[i], gameObjects[j]) > 0)
                     {
                         GameObject temp = gameObjects[i];
                         gameObjects[i] = gameObjects[j];
@@ -78,6 +78,17 @@ namespace L20250217
             }
 
 
+        }
+
+        public void Awake()
+        {
+            foreach(var choiceObject in gameObjects)
+            {
+                foreach(Component component in choiceObject.components)
+                {
+                    component.Awake();
+                }
+            }
         }
     }
 }

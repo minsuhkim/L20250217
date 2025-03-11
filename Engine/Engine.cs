@@ -104,17 +104,6 @@ namespace L20250217
             {
                 for (int x = 0; x < scene[y].Length; x++)
                 {
-                    GameObject floor = new GameObject();
-                    floor.name = "Floor";
-                    floor.transform.X = x;
-                    floor.transform.Y = y;
-
-                    SpriteRenderer spriterenderer = floor.AddComponent(new SpriteRenderer("floor.bmp"));
-                    spriterenderer.LoadBmp("floor.bmp");
-                    spriterenderer.Shape = ' ';
-                    spriterenderer.orderLayer = 0;
-                    world.Instantiate(floor);
-
                     if (scene[y][x] == '*')
                     {
                         GameObject wall = new GameObject();
@@ -122,16 +111,13 @@ namespace L20250217
                         wall.transform.X = x;
                         wall.transform.Y = y;
 
-                        SpriteRenderer spriteRenderer = wall.AddComponent(new SpriteRenderer("wall.bmp"));
+                        wall.AddComponent(new BoxCollider2D());
+                        SpriteRenderer spriteRenderer = wall.AddComponent(new SpriteRenderer());
                         spriteRenderer.LoadBmp("wall.bmp");
                         spriteRenderer.Shape = '*';
-                        spriterenderer.orderLayer = 1;
+                        spriteRenderer.orderLayer = 1;
 
                         world.Instantiate(wall);
-                    }
-                    else if (scene[y][x] == ' ')
-                    {
-                        
                     }
                     else if (scene[y][x] == 'P')
                     {
@@ -141,8 +127,8 @@ namespace L20250217
                         player.transform.Y = y;
 
                         player.AddComponent(new PlayerController());
-
-                        SpriteRenderer spriteRenderer = player.AddComponent(new SpriteRenderer("player.bmp", true));
+                        player.AddComponent(new CharacterController2D());
+                        SpriteRenderer spriteRenderer = player.AddComponent(new SpriteRenderer());
                         spriteRenderer.colorKey.r = 255;
                         spriteRenderer.colorKey.g = 0;
                         spriteRenderer.colorKey.b = 255;
@@ -150,7 +136,7 @@ namespace L20250217
                         spriteRenderer.LoadBmp("player.bmp", true);
                         spriteRenderer.Shape = 'P';
                         spriteRenderer.processTime = 150.0f;
-                        spriterenderer.orderLayer = 3;
+                        spriteRenderer.orderLayer = 3;
 
                         world.Instantiate(player);
                     }
@@ -161,14 +147,16 @@ namespace L20250217
                         monster.transform.X = x;
                         monster.transform.Y = y;
 
-                        SpriteRenderer spriteRenderer = monster.AddComponent(new SpriteRenderer("monster.bmp"));
+                        SpriteRenderer spriteRenderer = monster.AddComponent(new SpriteRenderer());
                         spriteRenderer.colorKey.r = 255;
                         spriteRenderer.colorKey.g = 255;
                         spriteRenderer.colorKey.b = 255;
                         spriteRenderer.colorKey.a = 255;
                         spriteRenderer.LoadBmp("monster.bmp");
                         spriteRenderer.Shape = 'M';
-                        spriterenderer.orderLayer = 4;
+                        spriteRenderer.orderLayer = 4;
+
+                        monster.AddComponent<AIController>(new AIController());
 
                         world.Instantiate(monster);
                     }
@@ -179,18 +167,31 @@ namespace L20250217
                         goal.transform.X = x;
                         goal.transform.Y = y;
 
-                        SpriteRenderer spriteRenderer = goal.AddComponent(new SpriteRenderer("goal.bmp"));
+                        SpriteRenderer spriteRenderer = goal.AddComponent(new SpriteRenderer());
                         spriteRenderer.colorKey.r = 255;
                         spriteRenderer.colorKey.g = 255;
                         spriteRenderer.colorKey.b = 255;
                         spriteRenderer.colorKey.a = 255;
                         spriteRenderer.LoadBmp("goal.bmp");
                         spriteRenderer.Shape = 'G';
-                        spriterenderer.orderLayer = 2;
+                        spriteRenderer.orderLayer = 2;
 
                         world.Instantiate(goal);
                     }
-                    
+
+                    GameObject floor = new GameObject();
+                    floor.name = "Floor";
+                    floor.transform.X = x;
+                    floor.transform.Y = y;
+
+                    SpriteRenderer spriteRenderer2 = floor.AddComponent(new SpriteRenderer());
+                    spriteRenderer2.LoadBmp("floor.bmp");
+                    spriteRenderer2.orderLayer = 0;
+
+
+                    spriteRenderer2.Shape = ' ';
+
+                    world.Instantiate(floor);
                 }
             }
             world.Sort();
@@ -201,6 +202,10 @@ namespace L20250217
             Input.Process();
         }
 
+        public void Awake()
+        {
+            world.Awake();
+        }
 
         protected void Update()
         {
@@ -234,6 +239,7 @@ namespace L20250217
         public void Run()
         {
             Console.CursorVisible = false;
+            Awake();
 
             while (isRunning)
             {

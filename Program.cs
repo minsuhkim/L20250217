@@ -41,26 +41,14 @@ namespace L20250217
 
         static void Main(string[] args)
         {
-            Action testAction = Test;
-            Action<int> test1Action = Test1;
 
-            testAction();
-            test1Action(1);
+            Engine.Instance.Init();
+            Engine.Instance.SetSortCompare(Compare);
 
-            Func<int, int> testFunc = (int a) =>
-            {
-                return a + 1;
-            };
+            Engine.Instance.Load("level02.map");
+            Engine.Instance.Run();
 
-            Console.WriteLine(testFunc(1));
-
-            //Engine.Instance.Init();
-            //Engine.Instance.SetSortCompare(Compare);
-
-            //Engine.Instance.Load("level02.map");
-            //Engine.Instance.Run();
-
-            //Engine.Instance.Quit();
+            Engine.Instance.Quit();
 
             //Engine.Instance.Stop();
         }
