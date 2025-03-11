@@ -4,53 +4,58 @@ using SDL2;
 
 namespace L20250217
 {
-    public delegate int Command(int a, int b);
-
-    public class Sample
+    public class EventClass
     {
-        public Command command;
+        public delegate void DelegateSample();
+        public DelegateSample delegateSample;
+        public event DelegateSample EventSample;
 
-        public void Sort()
+        public void Do()
         {
-            if (command(1, 2) > 0)
-            {
-                Console.WriteLine(command(1, 2));
-            }
+            EventSample?.Invoke();
         }
     }
 
     public class Program
     {
-        static int Add(int A, int B)
+        public static int Compare(GameObject first, GameObject second)
         {
-            return A + B;
+            SpriteRenderer spriteRenderer1 = first.GetComponent<SpriteRenderer>();
+            SpriteRenderer spriteRenderer2 = second.GetComponent<SpriteRenderer>();
+            if(spriteRenderer1 == null || spriteRenderer2 == null)
+            {
+                return 0;
+            }
+            return spriteRenderer1.orderLayer - spriteRenderer2.orderLayer;
         }
 
-        static int Sub(int A, int B)
+        public static void Test()
         {
-            return A - B;
+            Console.WriteLine("Test");
+        }
+
+        public static void Test1(int a)
+        {
+            Console.WriteLine($"Test {a}");
         }
 
         static void Main(string[] args)
         {
-            //Command command = Sub;
-            // Command command = new Command(Sub);
-            // 익명함수(람다)
-            // 한 번 쓰고 버리는 함수, 3줄 이하의 짧은 함수일 때 사용
-            Command command = new Command((int A, int B) =>
+            Action testAction = Test;
+            Action<int> test1Action = Test1;
+
+            testAction();
+            test1Action(1);
+
+            Func<int, int> testFunc = (int a) =>
             {
-                return A * B;
-            });
+                return a + 1;
+            };
 
-
-            // 위 두 코드가 같은 역할
-            Console.WriteLine(command(3, 2));
-
-            Sample sample = new Sample();
-            sample.command = Add;
-            sample.Sort();
+            Console.WriteLine(testFunc(1));
 
             //Engine.Instance.Init();
+            //Engine.Instance.SetSortCompare(Compare);
 
             //Engine.Instance.Load("level02.map");
             //Engine.Instance.Run();

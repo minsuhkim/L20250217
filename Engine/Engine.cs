@@ -56,6 +56,8 @@ namespace L20250217
                 SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC |
                 SDL.SDL_RendererFlags.SDL_RENDERER_TARGETTEXTURE);
 
+            world = new World();
+
             return true;
         }
 
@@ -96,7 +98,7 @@ namespace L20250217
             sr.Close();
 
 
-            world = new World();
+            
 
             for (int y = 0; y < scene.Count; y++)
             {
@@ -249,6 +251,11 @@ namespace L20250217
                 Update();
                 Render();
             }
+        }
+
+        public void SetSortCompare(World.SortCompare sortCompare)
+        {
+            world.sortCompre = sortCompare;
         }
 
         public World world;
