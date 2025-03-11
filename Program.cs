@@ -4,86 +4,58 @@ using SDL2;
 
 namespace L20250217
 {
+    public delegate int Command(int a, int b);
+
+    public class Sample
+    {
+        public Command command;
+
+        public void Sort()
+        {
+            if (command(1, 2) > 0)
+            {
+                Console.WriteLine(command(1, 2));
+            }
+        }
+    }
+
     public class Program
     {
-        class Data
+        static int Add(int A, int B)
         {
-            public void Count()
-            {
-                Console.WriteLine("Count");
-            }
+            return A + B;
+        }
 
-            private void FuncA()
-            {
-                Console.WriteLine("private FuncA");
-            }
-
-            protected void Sum()
-            {
-                Console.WriteLine("protected Sum");
-            }
-
-            public static void StaticFunction()
-            {
-                Console.WriteLine("Static Func");
-            }
-
-            public static void Add(int A, int B)
-            {
-                Console.WriteLine($"{A} + {B} = {A + B}");
-            }
-
-            private float Silver = 3;
-            public int Gold = 1;
-            protected int Money = 2;
-
-            public int MP
-            {
-                get;
-                set;
-            }
+        static int Sub(int A, int B)
+        {
+            return A - B;
         }
 
         static void Main(string[] args)
         {
-            //Data d = new Data();
-            //Type classType = d.GetType();
-            //MethodInfo[] methods = classType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
-            //foreach (MethodInfo info in methods)
-            //{
-            //    //Console.WriteLine($"{info.name}");
-            //    if (info.name.CompareTo("Add") == 0)
-            //    {
-            //        ParameterInfo[] paramInfos = info.GetParameters();
-            //        foreach (ParameterInfo paramInfo in paramInfos)
-            //        {
-            //            Console.WriteLine(paramInfo.name);
-            //        }
-            //        //Object[] param = { 3, 5 };
-            //        //info.Invoke(d, param);
-            //    }
-            //}
+            //Command command = Sub;
+            // Command command = new Command(Sub);
+            // 익명함수(람다)
+            // 한 번 쓰고 버리는 함수, 3줄 이하의 짧은 함수일 때 사용
+            Command command = new Command((int A, int B) =>
+            {
+                return A * B;
+            });
 
-            //FieldInfo[] fields = classType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
-            //foreach (FieldInfo info in fields)
-            //{
-            //    Console.WriteLine($"{info.FieldType} {info.name} : {info.GetValue(d)}");
-            //    info.SetValue(d, 10);
-            //    Console.WriteLine($"{info.FieldType} {info.name} : {info.GetValue(d)}");
-            //}
 
-            //PropertyInfo[] propertyInfos = classType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
-            //foreach (PropertyInfo info in propertyInfos)
-            //{
-            //    Console.WriteLine($"{info.name} {info.GetValue(d)}");
-            //}
+            // 위 두 코드가 같은 역할
+            Console.WriteLine(command(3, 2));
 
-            Engine.Instance.Init();
+            Sample sample = new Sample();
+            sample.command = Add;
+            sample.Sort();
 
-            Engine.Instance.Load("level02.map");
-            Engine.Instance.Run();
+            //Engine.Instance.Init();
 
-            Engine.Instance.Quit();
+            //Engine.Instance.Load("level02.map");
+            //Engine.Instance.Run();
+
+            //Engine.Instance.Quit();
 
             //Engine.Instance.Stop();
         }

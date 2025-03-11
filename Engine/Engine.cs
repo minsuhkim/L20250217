@@ -34,8 +34,8 @@ namespace L20250217
         }
 
         protected bool isRunning = true;
-        public IntPtr myWindow;
-        public IntPtr myRenderer;
+        public nint myWindow;
+        public nint myRenderer;
         public SDL.SDL_Event myEvent;
 
         public bool Init()
@@ -107,10 +107,10 @@ namespace L20250217
                     floor.transform.X = x;
                     floor.transform.Y = y;
 
-                    SpriteRenderer spriterenderer = floor.AddComponent<SpriteRenderer>(new SpriteRenderer("floor.bmp", true));
+                    SpriteRenderer spriterenderer = floor.AddComponent(new SpriteRenderer("floor.bmp"));
                     spriterenderer.LoadBmp("floor.bmp");
                     spriterenderer.Shape = ' ';
-
+                    spriterenderer.orderLayer = 0;
                     world.Instantiate(floor);
 
                     if (scene[y][x] == '*')
@@ -120,9 +120,10 @@ namespace L20250217
                         wall.transform.X = x;
                         wall.transform.Y = y;
 
-                        SpriteRenderer spriteRenderer = wall.AddComponent<SpriteRenderer>(new SpriteRenderer("player.bmp", true));
+                        SpriteRenderer spriteRenderer = wall.AddComponent(new SpriteRenderer("wall.bmp"));
                         spriteRenderer.LoadBmp("wall.bmp");
                         spriteRenderer.Shape = '*';
+                        spriterenderer.orderLayer = 1;
 
                         world.Instantiate(wall);
                     }
@@ -137,9 +138,9 @@ namespace L20250217
                         player.transform.X = x;
                         player.transform.Y = y;
 
-                        player.AddComponent<PlayerController>(new PlayerController());
+                        player.AddComponent(new PlayerController());
 
-                        SpriteRenderer spriteRenderer = player.AddComponent<SpriteRenderer>(new SpriteRenderer("player.bmp", true));
+                        SpriteRenderer spriteRenderer = player.AddComponent(new SpriteRenderer("player.bmp", true));
                         spriteRenderer.colorKey.r = 255;
                         spriteRenderer.colorKey.g = 0;
                         spriteRenderer.colorKey.b = 255;
@@ -147,6 +148,7 @@ namespace L20250217
                         spriteRenderer.LoadBmp("player.bmp", true);
                         spriteRenderer.Shape = 'P';
                         spriteRenderer.processTime = 150.0f;
+                        spriterenderer.orderLayer = 3;
 
                         world.Instantiate(player);
                     }
@@ -157,19 +159,33 @@ namespace L20250217
                         monster.transform.X = x;
                         monster.transform.Y = y;
 
-                        SpriteRenderer spriteRenderer = monster.AddComponent<SpriteRenderer>(new SpriteRenderer("player.bmp", true));
+                        SpriteRenderer spriteRenderer = monster.AddComponent(new SpriteRenderer("monster.bmp"));
                         spriteRenderer.colorKey.r = 255;
                         spriteRenderer.colorKey.g = 255;
                         spriteRenderer.colorKey.b = 255;
                         spriteRenderer.colorKey.a = 255;
                         spriteRenderer.LoadBmp("monster.bmp");
                         spriteRenderer.Shape = 'M';
+                        spriterenderer.orderLayer = 4;
 
                         world.Instantiate(monster);
                     }
                     else if (scene[y][x] == 'G')
                     {
-                        GameObject goal = new Goal(x, y, scene[y][x]);
+                        GameObject goal = new GameObject();
+                        goal.name = "Goal";
+                        goal.transform.X = x;
+                        goal.transform.Y = y;
+
+                        SpriteRenderer spriteRenderer = goal.AddComponent(new SpriteRenderer("goal.bmp"));
+                        spriteRenderer.colorKey.r = 255;
+                        spriteRenderer.colorKey.g = 255;
+                        spriteRenderer.colorKey.b = 255;
+                        spriteRenderer.colorKey.a = 255;
+                        spriteRenderer.LoadBmp("goal.bmp");
+                        spriteRenderer.Shape = 'G';
+                        spriterenderer.orderLayer = 2;
+
                         world.Instantiate(goal);
                     }
                     
