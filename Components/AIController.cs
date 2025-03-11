@@ -54,7 +54,7 @@ namespace L20250217
 
         private void OnTriggerEnter2D(GameObject other)
         {
-            Console.WriteLine($"trigger 감지: {other.name}");
+            //Console.WriteLine($"trigger 감지: {other.name}");
         }
     }
 }

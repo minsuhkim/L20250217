@@ -63,6 +63,7 @@ namespace L20250217
 
         public bool Quit()
         {
+            isRunning = false;
             SDL.SDL_DestroyRenderer(myRenderer);
             SDL.SDL_DestroyWindow(myWindow);
 
@@ -170,6 +171,7 @@ namespace L20250217
                         goal.transform.Y = y;
 
                         SpriteRenderer spriteRenderer = goal.AddComponent(new SpriteRenderer());
+                        goal.AddComponent<CircleCollider2D>().isTrigger = true;
                         spriteRenderer.colorKey.r = 255;
                         spriteRenderer.colorKey.g = 255;
                         spriteRenderer.colorKey.b = 255;
@@ -196,6 +198,12 @@ namespace L20250217
                     world.Instantiate(floor);
                 }
             }
+
+            GameObject gameManager = new GameObject();
+            gameManager.name = "GameManager";
+            gameManager.AddComponent<GameManager>();
+            world.Instantiate(gameManager);
+
             world.Sort();
         }
 

@@ -45,7 +45,15 @@ namespace L20250217
         public void OnTriggerEnter2D(GameObject other)
         {
             //Console.SetCursorPosition(300, 400);
-            Console.WriteLine($"trigger 감지: {other.name}");
+            //Console.WriteLine($"trigger 감지: {other.name}");
+            if (other.name == "Monster")
+            {
+                GameObject.Find("GameManager").GetComponent<GameManager>().isGameOver = true;
+            }
+            else if (other.name == "Goal")
+            {
+                GameObject.Find("GameManager").GetComponent<GameManager>().isFinish = true;
+            }
         }
     }
 }
