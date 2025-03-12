@@ -29,15 +29,6 @@ namespace L20250217
             return spriteRenderer1.orderLayer - spriteRenderer2.orderLayer;
         }
 
-        public static void Test()
-        {
-            Console.WriteLine("Test");
-        }
-
-        public static void Test1(int a)
-        {
-            Console.WriteLine($"Test {a}");
-        }
 
         static void Main(string[] args)
         {

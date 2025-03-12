@@ -14,16 +14,44 @@ namespace L20250217
         {
             if (isGameOver)
             {
-                Console.Clear();
-                Console.WriteLine("Failed");
-                Engine.Instance.Quit();
+                if(GameObject.Find("failObject") == null)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Failed");
+
+                    GameObject failObject = new GameObject();
+                    failObject.name = "failObject";
+                    TextRenderer textRenderer = failObject.AddComponent<TextRenderer>();
+                    textRenderer.color.r = 255;
+                    textRenderer.color.g = 0;
+                    textRenderer.color.b = 0;
+                    textRenderer.transform.X = 100;
+                    textRenderer.transform.Y = 100;
+
+                    textRenderer.SetText("실패");
+                    Engine.Instance.world.Instantiate(failObject);
+                }
             }
 
             if (isFinish)
             {
-                Console.Clear();
-                Console.WriteLine("Success");
-                Engine.Instance.Quit();
+                if(GameObject.Find("successObject") == null)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Success");
+
+                    GameObject successObject = new GameObject();
+                    successObject.name = "successObject";
+                    TextRenderer textRenderer = successObject.AddComponent<TextRenderer>();
+                    textRenderer.color.r = 0;
+                    textRenderer.color.g = 0;
+                    textRenderer.color.b = 255;
+                    textRenderer.transform.X = 100;
+                    textRenderer.transform.Y = 100;
+
+                    textRenderer.SetText("성공");
+                    Engine.Instance.world.Instantiate(successObject);
+                }
             }
         }
     }

@@ -37,7 +37,7 @@ namespace L20250217
         public nint myWindow;
         public nint myRenderer;
         public SDL.SDL_Event myEvent;
-
+        public IntPtr Font;
         public bool Init()
         {
             if (SDL.SDL_Init(SDL.SDL_INIT_EVERYTHING) < 0)
@@ -56,6 +56,11 @@ namespace L20250217
                 SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC |
                 SDL.SDL_RendererFlags.SDL_RENDERER_TARGETTEXTURE);
 
+            string projectFolder = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+
+            SDL_ttf.TTF_Init();
+            Font = SDL_ttf.TTF_OpenFont("c:/Windows/Fonts/gulim.ttc", 30);
+
             world = new World();
 
             return true;
@@ -64,6 +69,9 @@ namespace L20250217
         public bool Quit()
         {
             isRunning = false;
+
+            SDL_ttf.TTF_Quit();
+
             SDL.SDL_DestroyRenderer(myRenderer);
             SDL.SDL_DestroyWindow(myWindow);
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace L20250217
 {
-    public class SpriteRenderer : Component
+    public class SpriteRenderer : Renderer
     {
         public char Shape;
         public int orderLayer;
@@ -40,9 +40,9 @@ namespace L20250217
 
         }
 
-        public SpriteRenderer(string inFileName, bool inIsAnimation = false)
+        ~SpriteRenderer()
         {
-
+            SDL.SDL_DestroyTexture(myTexture);
         }
 
         public override void Update()
@@ -95,7 +95,7 @@ namespace L20250217
             }
         }
 
-        public virtual void Render()
+        public override void Render()
         {
             int X = gameObject.transform.X;
             int Y = gameObject.transform.Y;
